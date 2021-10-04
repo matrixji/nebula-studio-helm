@@ -83,11 +83,13 @@ spec:
             httpGet:
               path: /
               port: 7001
+          # Patch due to https://github.com/vesoft-inc/nebula-studio/issues/22
           command:
-            - egg-scripts
-            - start
-            - --title=egg-server-nebula-graph-studio
-            - --workers=3
+            - sh
+            - -c
+            - |
+              sed 's/\(.*docker-start.*studio\)",/\1 --workers=3",/' -i package.json
+              npm run docker-start
           resources:
             {{- toYaml .Values.resources.nebulaStudio | nindent 12 }}
           volumeMounts:
