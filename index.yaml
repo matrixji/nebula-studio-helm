@@ -3,6 +3,16 @@ entries:
   nebula-studio:
   - apiVersion: v2
     appVersion: v3
+    created: "2021-10-04T13:05:19.147087814-04:00"
+    description: A Helm chart for nebula-studio
+    digest: 2fffeb181a663ba78f834381ca89c9732d5a404d1f66b8088dd93aed446505e8
+    name: nebula-studio
+    type: application
+    urls:
+    - https://github.com/matrixji/nebula-studio-helm/releases/download/nebula-studio-0.1.1/nebula-studio-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v3
     created: "2021-10-04T12:28:28.594055934-04:00"
     description: A Helm chart for nebula-studio
     digest: 13b2cacf9152b84f11eb8c2c0373f4fb537c25fb5909d0f4a1fd9f3ae101f1df
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://github.com/matrixji/nebula-studio-helm/releases/download/nebula-studio-0.1.0/nebula-studio-0.1.0.tgz
     version: 0.1.0
-generated: "2021-10-04T12:28:28.594067544-04:00"
+generated: "2021-10-04T13:05:19.147112112-04:00"
