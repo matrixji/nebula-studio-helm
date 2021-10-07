@@ -1,11 +1,10 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: {{ include "nebula-studio.fullname" . }}
   labels:
     {{- include "nebula-studio.labels" . | nindent 4 }}
 spec:
-  serviceName: {{ include "nebula-studio.fullname" . }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -64,7 +63,7 @@ spec:
             - "--port=5699"
             - "--callback=http://127.0.0.1:7000/api/import/finish"
           volumeMounts:
-            - name: {{ include "nebula-studio.fullname" . }}-upload-data
+            - name: upload-data
               mountPath: /uploads
         - name: nebula-studio
           image: "{{ .Values.image.nebulaStudio.repository }}:{{ .Values.image.nebulaStudio.tag | default .Chart.AppVersion }}"
@@ -93,7 +92,7 @@ spec:
           resources:
             {{- toYaml .Values.resources.nebulaStudio | nindent 12 }}
           volumeMounts:
-            - name: {{ include "nebula-studio.fullname" . }}-upload-data
+            - name: upload-data
               mountPath: /uploads
         - name: nginx
           image: "{{ .Values.image.nginx.repository }}:{{ .Values.image.nginx.tag | default .Chart.AppVersion }}"
@@ -112,7 +111,7 @@ spec:
           resources:
             {{- toYaml .Values.resources.nginx | nindent 12 }}
           volumeMounts:
-            - name: {{ include "nebula-studio.fullname" . }}-upload-data
+            - name: upload-data
               mountPath: /uploads
             - name: nginx-config
               mountPath: /etc/nginx/conf.d/nebula.conf
@@ -124,6 +123,9 @@ spec:
             items:
               - key: nginx.conf
                 path: nginx.conf
+        - name: upload-data
+          persistentVolumeClaim:
+            claimName: {{ include "nebula-studio.fullname" . }}-upload-data
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -136,18 +138,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-  volumeClaimTemplates:
-    - metadata:
-        name: {{ include "nebula-studio.fullname" . }}-upload-data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        {{- if .Values.persistent.storageClassName }}
-          storageClassName: {{ .Values.persistent.storageClassName  }}
-        {{- end }}
-        resources:
-          requests:
-          {{- if .Values.persistent.size }}
-            storage: {{ .Values.persistent.size  }}
-          {{- else }}
-            storage: 5Gi
-          {{- end }}
