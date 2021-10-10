@@ -21,13 +21,13 @@ $ helm repo update
 Assume using release name: `my-studio`
 
 ```
-$ helm upgrade --install my-studio nebula-graph/nebula-graph
+$ helm upgrade --install my-studio nebula-graph/nebula-studio
 ```
 
 ### Install with a NodePort for external visit
 
 ```
-$ helm upgrade --install my-studio --set service.type=NodePort --set service.port=30070 nebula-graph/nebula-graph
+$ helm upgrade --install my-studio --set service.type=NodePort --set service.port=30070 nebula-graph/nebula-studio
 ```
 
 After success installed, we could visit nebula-studio via http://address-of-node:30070/
