@@ -1,5 +1,7 @@
 # Nebula Graph Studio Helm Chart
 
+**Note: Thie repository is NOT NEEDED ANY MORE, the chart is merged into: [vesoft-inc/nebula-studio](https://github.com/vesoft-inc/nebula-studio)**
+
 ## Introduction
 This chart bootstraps Nebula Graph Studio deployment on a Kubernetes cluster using the Helm.
 
